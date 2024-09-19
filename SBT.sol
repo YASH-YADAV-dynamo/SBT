@@ -1,19 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-/**
- * An experiment in Soul Bound Tokens (SBT's) following Vitalik's
- * co-authored whitepaper at:
- * https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763
- *
- * I propose for a rename to Non-Transferable Tokens NTT's
- */
-
 contract SBT {
 
     struct Soul {
         string identity;
-        // add issuer specific fields below
         string url;
         uint256 score;
         uint256 timestamp;
@@ -76,11 +67,7 @@ contract SBT {
         return souls[_soul];
     }
 
-    /**
-     * Profiles are used by 3rd parties and individual users to store data.
-     * Data is stored in a nested mapping relative to msg.sender
-     * By default they can only store data on addresses that have been minted
-     */
+ 
     function setProfile(address _soul, Soul memory _soulData) external {
         require(keccak256(bytes(souls[_soul].identity)) != zeroHash, "Cannot create a profile for a soul that has not been minted");
         soulProfiles[msg.sender][_soul] = _soulData;
